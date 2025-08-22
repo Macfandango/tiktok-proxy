@@ -12,11 +12,7 @@ module.exports = async (req, res) => {
     }
     const target = decodeURIComponent(raw);
 
-    // 👉 сюда вставь свои куки из браузера (раздел "Application → Cookies")
-    const cookies = [
-      "msToken=QKnzARceRG_kWxL8tTnL3w8LvuOWSy4qvA_nuAl8uiLNyg2ficUZ5aeaUBYyG2cmbKCuwZ0SpAi0NtIcIsvvnP5hnZ9vVus0T-_eRSFFrE6SF2jrJSJxpscN2MTX9rRFMK2nMhpLe5QTeaKzmM_BkoXXyg==",
-      "msToken=yEe96QqkxqdRlWuiJkUVnNQCXVcDxsjucLIsomnjX31pg5WYqn3ZWUHrTPA-G-0bPSBFFLgunWwr6e8M4C5ZxbAsCpPEQws9-ceSeeYj2czMgplXOKPXlZq6wueAfarrr5ZUds6gkEHRXi6-9uLBr3sEZw=="
-    ].join("; ");
+    const cookies = "_ttp=30DPz8mhYfXOdoLclyZ3cg076RW; delay_guest_mode_vid=5; s_v_web_id=verify_memic1y1_hznQBUjo_uuxL_4l2R_AJ7P_m2s6TqAUYM1a; passport_csrf_token=fe2c8ab782e3a5bb1e9b0f63f1202a8f; passport_csrf_token_default=fe2c8ab782e3a5bb1e9b0f63f1202a8f; last_login_method=google; tiktok_webapp_theme_source=auto; tiktok_webapp_theme=dark; passport_fe_beating_status=true; msToken=nOyyvR87zK5owrnd1qkq7UTImdQSJMwQQ73BJBmjODBOEWR95p_9GGKJg4xYVZYRgBz1yMXJOT6C9Q7caEi762v665g6tAN_1y7muDmYAwVz3OC0yk54Vv_hF7jnoqf2N2hpJo2xhCNGwo7Ex9-pxbCE; msToken=TG0B7LfC4GwaZKB7yhf809vVB87zONnmsSt2boLT078R6eoGhZHkYEyVvVtzqhcxyVUIB8HLzhJ3yfJw_3gVwxMj6kwGT0bgo3fdojjLsZMh0rH39YqGo0BVDs-x1YjSF6g_hRoeUb7eqtejpcU1GH1B";
 
     const r = await fetchPoly(target, {
       method: "GET",
@@ -30,14 +26,13 @@ module.exports = async (req, res) => {
         "Accept-Encoding": "identity",
         "Cookie": cookies,
 
-        // browser-like заголовки
         "sec-ch-ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not:A-Brand\";v=\"99\"",
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "\"Windows\"",
         "sec-fetch-dest": "document",
         "sec-fetch-mode": "navigate",
         "sec-fetch-site": "none",
-        "sec-fetch-user": "?1",
+        "sec-fetch-user": "?1"
       }
     });
 
@@ -48,3 +43,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: String(e) });
   }
 };
+
