@@ -20,11 +20,22 @@ module.exports = async (req, res) => {
         "Accept-Language": "en-US,en;q=0.9",
         "Referer": "https://www.tiktok.com/",
         "Connection": "keep-alive",
-        "Upgrade-Insecure-Requests": "1"
+        "Upgrade-Insecure-Requests": "1",
+        "Accept-Encoding": "identity",
+
+        // важные browser-like заголовки
+        "sec-ch-ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not:A-Brand\";v=\"99\"",
+        "sec-ch-ua-mobile": "?0",
+        "sec-ch-ua-platform": "\"Windows\"",
+        "sec-fetch-dest": "document",
+        "sec-fetch-mode": "navigate",
+        "sec-fetch-site": "none",
+        "sec-fetch-user": "?1",
       }
     });
 
     const text = await r.text();
+
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.status(r.status).send(text);
   } catch (e) {
