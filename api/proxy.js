@@ -12,6 +12,12 @@ module.exports = async (req, res) => {
     }
     const target = decodeURIComponent(raw);
 
+    // 👉 сюда вставь свои куки из браузера (раздел "Application → Cookies")
+    const cookies = [
+      "msToken=QKnzARceRG_kWxL8tTnL3w8LvuOWSy4qvA_nuAl8uiLNyg2ficUZ5aeaUBYyG2cmbKCuwZ0SpAi0NtIcIsvvnP5hnZ9vVus0T-_eRSFFrE6SF2jrJSJxpscN2MTX9rRFMK2nMhpLe5QTeaKzmM_BkoXXyg==",
+      "msToken=yEe96QqkxqdRlWuiJkUVnNQCXVcDxsjucLIsomnjX31pg5WYqn3ZWUHrTPA-G-0bPSBFFLgunWwr6e8M4C5ZxbAsCpPEQws9-ceSeeYj2czMgplXOKPXlZq6wueAfarrr5ZUds6gkEHRXi6-9uLBr3sEZw=="
+    ].join("; ");
+
     const r = await fetchPoly(target, {
       method: "GET",
       headers: {
@@ -22,8 +28,9 @@ module.exports = async (req, res) => {
         "Connection": "keep-alive",
         "Upgrade-Insecure-Requests": "1",
         "Accept-Encoding": "identity",
+        "Cookie": cookies,
 
-        // важные browser-like заголовки
+        // browser-like заголовки
         "sec-ch-ua": "\"Chromium\";v=\"124\", \"Google Chrome\";v=\"124\", \"Not:A-Brand\";v=\"99\"",
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": "\"Windows\"",
@@ -35,11 +42,9 @@ module.exports = async (req, res) => {
     });
 
     const text = await r.text();
-
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.status(r.status).send(text);
   } catch (e) {
     res.status(500).json({ error: String(e) });
   }
 };
-
