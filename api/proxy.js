@@ -1,11 +1,11 @@
-// /api/proxy.js — серверлес-функция (формат CommonJS)
+// /api/proxy.js
 const fetchPoly = (...args) =>
   (global.fetch ? global.fetch(...args) : import('node-fetch').then(({ default: f }) => f(...args)));
 
 module.exports = async (req, res) => {
   try {
     const q = req.query || {};
-    const raw = q.url || q.u;                 // поддержим ?url= или ?u=
+    const raw = q.url || q.u;
     if (!raw) {
       res.status(400).json({ error: "Missing ?url=" });
       return;
@@ -15,10 +15,12 @@ module.exports = async (req, res) => {
     const r = await fetchPoly(target, {
       method: "GET",
       headers: {
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
         "Accept-Language": "en-US,en;q=0.9",
-        "Cache-Control": "no-cache"
+        "Referer": "https://www.tiktok.com/",
+        "Connection": "keep-alive",
+        "Upgrade-Insecure-Requests": "1"
       }
     });
 
@@ -29,3 +31,4 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: String(e) });
   }
 };
+
