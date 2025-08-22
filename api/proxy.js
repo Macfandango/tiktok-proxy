@@ -1,11 +1,11 @@
-// /api/proxy.js
+// /api/proxy.js — серверлес-функция (формат CommonJS)
 const fetchPoly = (...args) =>
   (global.fetch ? global.fetch(...args) : import('node-fetch').then(({ default: f }) => f(...args)));
 
 module.exports = async (req, res) => {
   try {
     const q = req.query || {};
-    const raw = q.url || q.u;
+    const raw = q.url || q.u;                 // поддержим ?url= или ?u=
     if (!raw) {
       res.status(400).json({ error: "Missing ?url=" });
       return;
@@ -29,4 +29,3 @@ module.exports = async (req, res) => {
     res.status(500).json({ error: String(e) });
   }
 };
-
